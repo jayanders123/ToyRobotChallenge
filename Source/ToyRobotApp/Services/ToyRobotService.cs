@@ -13,7 +13,7 @@ namespace ToyRobotApp.Services
     /// </summary>
     public class ToyRobotService : IToyRobotService
     {
-       public PlacementResult MoveRobot(int x, int y, string directionFacing)
+       public NewPlacementResult MoveRobot(int x, int y, string directionFacing)
         {
 
             return null;

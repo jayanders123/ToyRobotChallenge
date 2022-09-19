@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using ToyRobotApp.Models;
 using ToyRobotApp.Services;
 
 namespace ToyRobotApp
@@ -12,48 +14,28 @@ namespace ToyRobotApp
         static void Main(string[] args)
         {
             bool applicationIsRunning = true;
-            ToyRobotService toyRobot = new ToyRobotService();
+            ToyRobotService toyRobotService = new ToyRobotService();
 
             var xAxisPosition = 0;
             var yAxisPosition = 0;
             var directionRobotIsFacing = "";
 
-            //Initialization of program sets robot in the position 0,0,NORTH
-            Dictionary<string,string> robotsCurrentPosition = new Dictionary<string,string>()
-            {
-                {"x-axis","0"},
-                {"y-axis","0"},
-                {"directionRobotisFacing","NORTH"}
-            };
 
-            //Insertion and validation of the axis values user has selected for the robot to move to
+
             while (applicationIsRunning)
             {
-                Console.WriteLine("Please enter your 'X' position using a NUMBER 0 - 4");
-                var input = Convert.ToInt32(Console.ReadLine());
+                //Initialization of program sets robot in the position 0,0,NORTH
+                Robot toyRobot = new Robot();
 
                 try
                 {
-                    xAxisPosition = ValidationService.ValidateAxisGiven(input);
+                    var nextSelectedRobotPosition = ValidationService.ValidateUserInput();
 
-                    Console.WriteLine("Please enter your 'Y' position using a NUMBER 0 - 4");
+                    xAxisPosition = Int32.Parse(nextSelectedRobotPosition["xAxis"]);
+                    yAxisPosition = Int32.Parse(nextSelectedRobotPosition["xAxis"]);
+                    directionRobotIsFacing = nextSelectedRobotPosition["directionRobotIsFacing"];
 
-                    input = Convert.ToInt32(Console.ReadLine());
-                    yAxisPosition = ValidationService.ValidateAxisGiven(input);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    continue;
-                }
-                Console.WriteLine("Please enter the direction you'd like to face");
-                Console.WriteLine("1 = NORTH, 2 = EAST, 3 = SOUTH, 4 = WEST");
-
-                //Insertion and validation of the direction value the user has selected for the robot to face
-                try 
-                {
-                    input = Convert.ToInt32(Console.ReadLine());
-                    directionRobotIsFacing = ValidationService.ValidateDirectionGiven(input);
+                    toyRobotService.MoveRobot(xAxisPosition,yAxisPosition,directionRobotIsFacing);
                 }
                 catch (Exception ex)
                 {

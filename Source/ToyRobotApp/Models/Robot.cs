@@ -10,6 +10,6 @@ namespace ToyRobotApp.Models
     {
         public int XAxis { get; set; }
         public int YAxis { get; set; }
-        public string DirectionRobotIsFacing { get; set; }
+        public string DirectionRobotFacing { get; set; }
     }
 }

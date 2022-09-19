@@ -16,7 +16,7 @@ namespace ToyRobotApp.Services.Interfaces
         /// <param name="y">Y-axis position on the board.</param>
         /// <param name="directionFacing">The direction user wants the robot to be facing once placed.</param>
         /// <returns></returns>
-        public PlacementResult MoveRobot(int x, int y, string directionFacing);
+        public NewPlacementResult MoveRobot(int x, int y, string directionFacing);
 
     }
 }
