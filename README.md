@@ -6,7 +6,7 @@ The application is an implementation of the Toy Robot Simulator.
 
 1: Download the zip file.
 
-2: From the root of the folder, execute these commands within the command-line window:
+2: From the root of the folder, execute these commands within a command-line window:
 ```
   $ cd Source
 ```
@@ -22,4 +22,4 @@ The application is an implementation of the Toy Robot Simulator.
 
 ## Whilst Running the App
 
-Instructions are given during the session to help you use the tpy robot correctly.
+Instructions are given during the session to help you use the toy robot correctly.
