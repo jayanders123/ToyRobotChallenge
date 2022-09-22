@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using ToyRobotApp.Models;
 using ToyRobotApp.Services;
 
@@ -14,39 +13,74 @@ namespace ToyRobotApp
         static void Main(string[] args)
         {
             bool applicationIsRunning = true;
-            ToyRobotService toyRobotService = new ToyRobotService();
-
-            var xAxisPosition = 0;
-            var yAxisPosition = 0;
-            var directionRobotIsFacing = "";
+            var robotService = new ToyRobotService();
+            List<string> commandsGivenByUser = new List<string>();
 
 
+            //This tracks the position of the robot while app is running.
+            Robot toyRobot = new Robot()
+            {
+                XAxis = 0,
+                YAxis = 0,
+                DirectionRobotFacing = "NORTH"
+
+            };
 
             while (applicationIsRunning)
             {
-                //Initialization of program sets robot in the position 0,0,NORTH
-                Robot toyRobot = new Robot();
+                var isSelectingCommands = true;
+                Console.WriteLine("\nHey, I'm your Toy Robot! Your first command needs to be a 'PLACE' before you can do anything else.");
+                var placeIsFirstCommand = false;
 
-                try
+                while (isSelectingCommands)
                 {
-                    var nextSelectedRobotPosition = ValidationService.ValidateUserInput();
+                    try
+                    {
+                        Console.WriteLine("\nEnter your command. If you're finished select 'REPORT'");
+                        Console.WriteLine("1 = PLACE 2 = MOVE 3 = LEFT 4 = RIGHT 5 = REPORT");
+                        var command = ValidationService.ValidateIfConsoleInputIsInteger(Console.ReadLine());
 
-                    xAxisPosition = Int32.Parse(nextSelectedRobotPosition["xAxis"]);
-                    yAxisPosition = Int32.Parse(nextSelectedRobotPosition["xAxis"]);
-                    directionRobotIsFacing = nextSelectedRobotPosition["directionRobotIsFacing"];
+                        switch (command)
+                        {
+                            case 1:
 
-                    toyRobotService.MoveRobot(xAxisPosition,yAxisPosition,directionRobotIsFacing);
+                                placeIsFirstCommand = true;
+                                commandsGivenByUser.Add(ValidationService.ReadAndValidateUserInput());
+                                break;
+
+                            case 2:
+                                ValidationService.ValidateFirstCommandIsPlace(placeIsFirstCommand);
+                                commandsGivenByUser.Add("MOVE");
+                                break;
+
+                            case 3:
+                                ValidationService.ValidateFirstCommandIsPlace(placeIsFirstCommand);
+                                commandsGivenByUser.Add("LEFT");
+                                break;
+
+                            case 4:
+                                ValidationService.ValidateFirstCommandIsPlace(placeIsFirstCommand);
+                                commandsGivenByUser.Add("RIGHT");
+                                break;
+
+                            case 5:
+
+                                toyRobot = robotService.ProcessCommands(toyRobot,commandsGivenByUser).CurrentPosition;
+
+                                Console.WriteLine($"\nOutput({toyRobot.XAxis},{toyRobot.YAxis},{toyRobot.DirectionRobotFacing})\n");
+
+                                isSelectingCommands = false;
+                                break;
+                        }
+                    }
+
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        continue;
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    continue;
-                }
 
-                //var tr = toyRobot.MoveRobot(xAxisPosition,yAxisPosition,directionToyIsFacing);
-
-                //Show result
-                Console.WriteLine(xAxisPosition + " " + yAxisPosition + " " + directionRobotIsFacing);
                 
 
                 Console.WriteLine("Would you like to make another move? Type 'Y' or 'N'.");

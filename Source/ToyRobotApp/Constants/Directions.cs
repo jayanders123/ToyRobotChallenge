@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace ToyRobotApp.Constants
 {
+    /// <summary>
+    /// A Enum representing the possible directions a robot can face at any given time.
+    /// </summary>
     enum Directions
     {
-        North = 1,
-        East = 2,
-        South = 3,
-        West = 4
+        NORTH = 1,
+        EAST = 2,
+        SOUTH = 3,
+        WEST = 4
     }
 }

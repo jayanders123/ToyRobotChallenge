@@ -7,16 +7,18 @@ using ToyRobotApp.Models;
 
 namespace ToyRobotApp.Services.Interfaces
 {
+    /// <summary>
+    /// This interface contains ToyBot functionality methods for navigating around the board.
+    /// </summary>
     public interface IToyRobotService
     {
         /// <summary>
-        /// This function moves the robot to the users desired position on the board.
+        /// This function carries out all the commands given by the user on the robot. All the commands are executed, as long as none result in the robot falling off the table.
         /// </summary>
-        /// <param name="x">X-axis  position on the board.</param>
-        /// <param name="y">Y-axis position on the board.</param>
-        /// <param name="directionFacing">The direction user wants the robot to be facing once placed.</param>
+        /// <param name="robot">The robot that will be moved based on the given commands. Its state is stored in this object to ensure it stays within the bounds.</param>
+        /// <param name="commandList">The given list of commands the user submitted.</param>
         /// <returns></returns>
-        public NewPlacementResult MoveRobot(int x, int y, string directionFacing);
+        NewPlacementResult ProcessCommands(Robot robot, List<string> commandList);
 
     }
 }
