@@ -103,7 +103,7 @@ namespace ToyRobotApp.Services
                     draftPlacement["x"] += 1;
                     break;
                 case "SOUTH":
-                    draftPlacement["x"] -= 1;
+                    draftPlacement["y"] -= 1;
                     break;
                 case "WEST":
                     draftPlacement["x"] -= 1;
